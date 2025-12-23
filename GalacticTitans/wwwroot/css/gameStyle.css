@@ -107,12 +107,16 @@
 .isCommonBlue, .blue-1 {
     color: var(--blue-1);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 }
 .isCommonBlue2, .blue-2{
     color: var(--blue-2);
 =======
 >>>>>>> Stashed changes
 }
+=======
+}
+>>>>>>> Stashed changes
 
 .isCommonBlue2, .blue-2 {
     color: var(--blue-2);
@@ -125,6 +129,7 @@
 .isCommonMagenta, .mag-1 {
     color: var(--magenta-1);
 }
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 .isCommonGreen, .green-1 {
     color: var(--green-1);
@@ -139,6 +144,8 @@
     color: var(--purple-2);
 }
 =======
+=======
+>>>>>>> Stashed changes
 
 .isCommonGreen, .green-1 {
     color: var(--green-1);
@@ -156,6 +163,9 @@
     color: var(--purple-2);
 }
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 .isCommonTeal, .teal-1 {
     color: var(--teal-1);
@@ -308,11 +318,14 @@ a:hover path {
     position:relative;
 }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 .gCbuttonLicon {
     width: 50px;
     height: 50px;
 }
 =======
+=======
+>>>>>>> Stashed changes
 
 .gButton1a2:after {
     width: 0;
@@ -334,12 +347,19 @@ a:hover path {
     height: 50px;
 }
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 .gCbuttonL0 {
     width: 75px;
     height: 50px;
 }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 =======
 
 >>>>>>> Stashed changes
@@ -348,23 +368,33 @@ a:hover path {
     height: 30px;
 }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 .gCbuttonL2 {
     width: 200px;
     height: 40px;
 } 
 =======
+=======
+>>>>>>> Stashed changes
 
 .gCbuttonL2 {
     width: 200px;
     height: 40px;
 }
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 .gCbuttonL3 {
     width: 400px;
     height: 50px;
 }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 =======
 
 >>>>>>> Stashed changes
@@ -373,6 +403,10 @@ a:hover path {
     height: 50px;
 }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 =======
 
 >>>>>>> Stashed changes
@@ -381,6 +415,10 @@ a:hover path {
     height: 50px;
 }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 =======
 
 >>>>>>> Stashed changes
@@ -390,6 +428,10 @@ a:hover path {
     fill: white;
 }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 =======
 
 >>>>>>> Stashed changes
@@ -399,17 +441,23 @@ a:hover path {
         fill: rgb(242, 66, 255);
     }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 .gCbuttonSvgTri1BaseStyle {
     fill: red;
 }
 .svgButtonMainStyle {   /* rect normal */ 
 =======
+=======
+>>>>>>> Stashed changes
 
 .gCbuttonSvgTri1BaseStyle {
     fill: red;
 }
 
 .svgButtonMainStyle { /* rect normal */
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     width: inherit;
     height: 30px;
@@ -417,6 +465,7 @@ a:hover path {
     overflow: visible;
 }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     .svgButtonMainStyle:hover { /* rect hover */
         fill: var(--green-2);
     }
@@ -427,6 +476,8 @@ a:hover path {
             fill: var(--yellow-1);
         }
 =======
+=======
+>>>>>>> Stashed changes
 
     .svgButtonMainStyle:hover { /* rect hover */
         fill: var(--green-2);
@@ -440,6 +491,9 @@ a:hover path {
             fill: var(--yellow-1);
         }
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 .svgButtonMainTextStyle {
     fill: var(--yellow-1);
@@ -447,6 +501,7 @@ a:hover path {
     y: 50px;
 }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     .svgButtonMainTextStyle:hover {
         fill: var(--teal-1);
     }
@@ -463,6 +518,8 @@ a:hover path {
         fill: var(--green-2);
     }
 =======
+=======
+>>>>>>> Stashed changes
 
     .svgButtonMainTextStyle:hover {
         fill: var(--teal-1);
@@ -484,15 +541,24 @@ a:hover path {
         fill: var(--green-2);
     }
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     .svgButtonMainTriangleStyle:hover ~ .svgButtonMainTextStyle { /* text ishover */
         fill: var(--teal-1);
     }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
      
     
     /*
+=======
+
+
+/*
+>>>>>>> Stashed changes
 =======
 
 

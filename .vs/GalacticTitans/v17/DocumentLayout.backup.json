@@ -3,8 +3,13 @@
   "WorkspaceRootPath": "C:\\Users\\KaiKat\\Desktop\\GalacticTitansTARpe23\\",
   "Documents": [
     {
+<<<<<<< Updated upstream
       "AbsoluteMoniker": "D:0:0:{2B37668F-B5FE-4BED-B6A4-F1847DBDD559}|GalacticTitans\\GalacticTitans.csproj|c:\\users\\kaikat\\desktop\\galactictitanstarpe23\\galactictitans\\wwwroot\\css\\mergestyle.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{2B37668F-B5FE-4BED-B6A4-F1847DBDD559}|GalacticTitans\\GalacticTitans.csproj|solutionrelative:galactictitans\\wwwroot\\css\\mergestyle.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+=======
+      "AbsoluteMoniker": "D:0:0:{2B37668F-B5FE-4BED-B6A4-F1847DBDD559}|GalacticTitans\\GalacticTitans.csproj|c:\\users\\kaikat\\desktop\\galactictitanstarpe23\\galactictitans\\wwwroot\\css\\gamestyle.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{2B37668F-B5FE-4BED-B6A4-F1847DBDD559}|GalacticTitans\\GalacticTitans.csproj|solutionrelative:galactictitans\\wwwroot\\css\\gamestyle.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+>>>>>>> Stashed changes
     },
     {
       "AbsoluteMoniker": "D:0:0:{2B37668F-B5FE-4BED-B6A4-F1847DBDD559}|GalacticTitans\\GalacticTitans.csproj|c:\\users\\kaikat\\desktop\\galactictitanstarpe23\\galactictitans\\views\\titans\\mytitans.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -27,6 +32,7 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+<<<<<<< Updated upstream
               "Title": "mergeStyle.css",
               "DocumentMoniker": "C:\\Users\\KaiKat\\Desktop\\GalacticTitansTARpe23\\GalacticTitans\\wwwroot\\css\\mergeStyle.css",
               "RelativeDocumentMoniker": "GalacticTitans\\wwwroot\\css\\mergeStyle.css",
@@ -60,6 +66,87 @@
               "ViewState": "AgIAAE0AAAAAAAAAAABRwAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2025-11-16T21:14:00.88Z"
+=======
+              "Title": "gameStyle.css",
+              "DocumentMoniker": "C:\\Users\\KaiKat\\Desktop\\GalacticTitansTARpe23\\GalacticTitans\\wwwroot\\css\\gameStyle.css",
+              "RelativeDocumentMoniker": "GalacticTitans\\wwwroot\\css\\gameStyle.css",
+              "ToolTip": "C:\\Users\\KaiKat\\Desktop\\GalacticTitansTARpe23\\GalacticTitans\\wwwroot\\css\\gameStyle.css",
+              "RelativeToolTip": "GalacticTitans\\wwwroot\\css\\gameStyle.css",
+              "ViewState": "AgIAAGMBAAAAAAAAAAAuwJYBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-11-16T17:44:39.579Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "TitansController.cs",
+              "DocumentMoniker": "C:\\Users\\KaiKat\\Desktop\\GalacticTitansTARpe23\\GalacticTitans\\Controllers\\TitansController.cs",
+              "RelativeDocumentMoniker": "GalacticTitans\\Controllers\\TitansController.cs",
+              "ToolTip": "C:\\Users\\KaiKat\\Desktop\\GalacticTitansTARpe23\\GalacticTitans\\Controllers\\TitansController.cs",
+              "RelativeToolTip": "GalacticTitans\\Controllers\\TitansController.cs",
+              "ViewState": "AgIAAPgBAAAAAAAAAAAAAA8CAABgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T17:12:51.261Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "dbo.AspNetUsers.sql",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/INDEV_GALACTICTITANS_DB_5_2_PLAYERCONTINUE/True/SqlTable/dbo.AspNetUsers.sql",
+              "ToolTip": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/INDEV_GALACTICTITANS_DB_5_2_PLAYERCONTINUE/True/SqlTable/dbo.AspNetUsers.sql",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2025-11-16T17:00:27.655Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MyTitans.cshtml",
+              "DocumentMoniker": "C:\\Users\\KaiKat\\Desktop\\GalacticTitansTARpe23\\GalacticTitans\\Views\\Titans\\MyTitans.cshtml",
+              "RelativeDocumentMoniker": "GalacticTitans\\Views\\Titans\\MyTitans.cshtml",
+              "ToolTip": "C:\\Users\\KaiKat\\Desktop\\GalacticTitansTARpe23\\GalacticTitans\\Views\\Titans\\MyTitans.cshtml*",
+              "RelativeToolTip": "GalacticTitans\\Views\\Titans\\MyTitans.cshtml*",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAwwFgAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-16T16:51:05.172Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PlayerProfilesController.cs",
+              "DocumentMoniker": "C:\\Users\\KaiKat\\Desktop\\GalacticTitansTARpe23\\GalacticTitans\\Controllers\\PlayerProfilesController.cs",
+              "RelativeDocumentMoniker": "GalacticTitans\\Controllers\\PlayerProfilesController.cs",
+              "ToolTip": "C:\\Users\\KaiKat\\Desktop\\GalacticTitansTARpe23\\GalacticTitans\\Controllers\\PlayerProfilesController.cs",
+              "RelativeToolTip": "GalacticTitans\\Controllers\\PlayerProfilesController.cs",
+              "ViewState": "AgIAAFwAAAAAAAAAAAAIwG0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T16:49:47.929Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\KaiKat\\Desktop\\GalacticTitansTARpe23\\GalacticTitans\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "GalacticTitans\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\KaiKat\\Desktop\\GalacticTitansTARpe23\\GalacticTitans\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "GalacticTitans\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAB8AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-16T16:04:36.563Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\KaiKat\\Desktop\\GalacticTitansTARpe23\\GalacticTitans\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "GalacticTitans\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\KaiKat\\Desktop\\GalacticTitansTARpe23\\GalacticTitans\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "GalacticTitans\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAACIAAAAAAAAAAIAwwC4AAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-16T13:19:58.533Z"
+>>>>>>> Stashed changes
             }
           ]
         }
