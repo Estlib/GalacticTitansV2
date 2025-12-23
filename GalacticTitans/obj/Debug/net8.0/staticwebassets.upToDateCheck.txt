@@ -1,4 +1,5 @@
 wwwroot\css\gameStyle.css
+wwwroot\css\mergeStyle.css
 wwwroot\css\site.css
 wwwroot\favicon.ico
 wwwroot\js\site.js
@@ -47,6 +48,7 @@ wwwroot\lib\bootstrap\dist\js\bootstrap.js.map
 wwwroot\lib\bootstrap\dist\js\bootstrap.min.js
 wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map
 wwwroot\lib\bootstrap\LICENSE
+wwwroot\lib\gameasset\audio\JDSherbert - Ambiences Music Pack - Cosmic Star.mp3
 wwwroot\lib\gameasset\font\ethnocentric rg it.otf
 wwwroot\lib\gameasset\font\ethnocentric rg.otf
 wwwroot\lib\gameasset\font\forgotten futurist bd it.otf
@@ -57,8 +59,19 @@ wwwroot\lib\gameasset\font\zekton rg.otf
 wwwroot\lib\gameasset\font\Typodermic Desktop EULA 2023.pdf
 wwwroot\lib\gameasset\font\Typodermic Desktop EULA 2023_1.pdf
 wwwroot\lib\gameasset\font\Typodermic Desktop EULA 2023_2.pdf
+wwwroot\lib\gameasset\image\premadeastralbodies\00_TestGalaxy\LongViewAnimated.gif
+wwwroot\lib\gameasset\image\premadeastralbodies\00_TestGalaxy\LongViewStatic.png
+wwwroot\lib\gameasset\image\premadeastralbodies\00_TestMoon\LongViewAnimated.gif
+wwwroot\lib\gameasset\image\premadeastralbodies\00_TestMoon\LongViewStatic.png
+wwwroot\lib\gameasset\image\premadeastralbodies\00_TestPlanetCloud\LongViewAnimated.gif
+wwwroot\lib\gameasset\image\premadeastralbodies\00_TestPlanetCloud\LongViewStatic.png
+wwwroot\lib\gameasset\image\premadeastralbodies\00_TestPlanetTerrestrial\LongViewAnimated.gif
+wwwroot\lib\gameasset\image\premadeastralbodies\00_TestPlanetTerrestrial\LongViewStatic.png
+wwwroot\lib\gameasset\image\premadeastralbodies\00_TestStar\LongViewAnimated.gif
+wwwroot\lib\gameasset\image\premadeastralbodies\00_TestStar\LongViewStatic.png
 wwwroot\lib\gameasset\image\premadetitans\captainobvious.png
 wwwroot\lib\gameasset\image\premadetitans\NotImplementedImage.png
+wwwroot\lib\gameasset\image\premadetitans\Portrait.png
 wwwroot\lib\gameasset\image\site\title.jpg
 wwwroot\lib\gameasset\image\site\title.png
 wwwroot\lib\gameasset\image\stories\digislum_01.PNG

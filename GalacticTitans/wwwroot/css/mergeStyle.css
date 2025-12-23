@@ -1,0 +1,352 @@
+﻿﻿/*fondid*/
+
+/*tekstifondid*/
+@font-face {
+    font-family: zektonRG;
+    src: url('../lib/gameasset/font/zekton rg.otf')
+}
+
+@font-face {
+    font-family: forgottenFuturistRG;
+    src: url('../lib/gameasset/font/forgotten futurist rg.otf')
+}
+
+@font-face {
+    font-family: forgottenFuturistBD;
+    src: url('../lib/gameasset/font/forgotten futurist bd.otf')
+}
+
+@font-face {
+    font-family: forgottenFuturistRGIT;
+    src: url('../lib/gameasset/font/forgotten futurist rg it.otf')
+}
+
+@font-face {
+    font-family: forgottenFuturistBDIT;
+    src: url('../lib/gameasset/font/forgotten futurist bd it.otf')
+}
+
+
+
+
+/*title-fondid*/
+@font-face {
+    font-family: ethnoCentricRG;
+    src: url('../lib/gameasset/font/ethnocentric rg.otf')
+}
+
+@font-face {
+    font-family: ethnoCentricRGIT;
+    src: url('../lib/gameasset/font/ethnocentric rg it.otf')
+}
+
+:root {
+    --white-1: white !important;
+    --yellow-1: rgb(252, 255, 77);
+    --blue-1: rgb(77, 237, 255);
+    --blue-2: rgb(54, 135, 255);
+    --red-1: rgb(255, 66, 66);
+    --magenta-1: rgb(242, 66, 255);
+    --green-1: rgb(0, 208, 66);
+    --green-2: rgb(0, 255, 112);
+    --purple-1: #120441;
+    --purple-2: rgb(112, 93, 255);
+    --teal-1: rgb(82, 171, 155);
+}
+
+/* Kujundid */
+.TLtriangle {
+    width: 0;
+    height: 0;
+    border-left: 0px solid transparent;
+    border-right: 25px solid transparent;
+    border-top: 25px solid #555;
+}
+
+.BRtriangle {
+    width: 0;
+    height: 0;
+    border-left: 25px solid transparent;
+    border-right: 0px solid transparent;
+    border-bottom: 25px solid #555;
+}
+
+
+/*klassid*/
+
+/*title-klassid*/
+.galacticTitleFontOnly {
+    font-family: ethnoCentricRG;
+}
+
+.galacticTitleFontIsGradient {
+    font-family: ethnoCentricRG;
+    background: -webkit-linear-gradient(rgb(252, 255, 77), rgb(77, 237, 255));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.galacticTitleFontIsGradient72px {
+    font-family: ethnoCentricRG;
+    background: -webkit-linear-gradient(rgb(252, 255, 77), rgb(77, 237, 255));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 69px !important;
+}
+
+.galacticGradient {
+    /*background-color: -webkit-linear-gradient(rgb(252, 255, 77), rgb(77, 237, 255)) !important;*/
+    background-image: linear-gradient(rgb(252, 255, 77), rgb(77, 237, 255)) !important;
+}
+
+/*tekstivärvi-klassid*/
+.isPlayerName, .isCommonWhite, .white-1 {
+    color: var(--white-1);
+}
+
+.isCommonYellow, .yellow-1 {
+    color: var(--yellow-1);
+}
+
+.isCommonBlue, .blue-1 {
+    color: var(--blue-1);
+}
+
+.isCommonBlue2, .blue-2 {
+    color: var(--blue-2);
+}
+
+.isCommonRed, .red-1 {
+    color: var(--red-1);
+}
+
+.isCommonMagenta, .mag-1 {
+    color: var(--magenta-1);
+}
+
+.isCommonGreen, .green-1 {
+    color: var(--green-1);
+}
+
+.isCommonGreen2, .green-2 {
+    color: var(--green-2);
+}
+
+.isBgPurple, .purple-1 {
+    color: var(--purple-1);
+}
+
+.isCommonPurple, .purple-2 {
+    color: var(--purple-2);
+}
+
+.isCommonTeal, .teal-1 {
+    color: var(--teal-1);
+}
+
+/*table-klassid*/
+.galacticTableWhite, .gTW {
+    /*background-color: -webkit-linear-gradient(rgb(252, 255, 77), rgb(77, 237, 255)) !important;*/
+    border: 10px solid;
+    border-color: white;
+}
+
+.galacticTableBlue, .gTB {
+    /*background-color: -webkit-linear-gradient(rgb(252, 255, 77), rgb(77, 237, 255)) !important;*/
+    border: 10px solid;
+    border-color: rgb(77, 237, 255);
+}
+
+/*Error-klassid*/
+
+.galacticMessageTableError, .gMTE {
+    /*background-color: -webkit-linear-gradient(rgb(252, 255, 77), rgb(77, 237, 255)) !important;*/
+    border: 5px solid;
+    border-color: rgb(255, 66, 66);
+    -webkit-text-fill-color: transparent;
+}
+
+.galacticErrorMessageColor, .gXmc {
+    /*background-color: -webkit-linear-gradient(rgb(252, 255, 77), rgb(77, 237, 255)rgb(242, 66, 255)rgb(255, 66, 66)) !important;*/
+    /*    color: magenta !important;*/
+    background: -webkit-linear-gradient(rgb(242, 66, 255), rgb(255, 66, 66));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.galacticWarningMessageColor, .gWmc {
+    /*background-color: -webkit-linear-gradient(rgb(252, 255, 77), rgb(77, 237, 255)rgb(242, 66, 255)rgb(255, 66, 66)) !important;*/
+    /*    color: magenta !important; rgb(252, 255, 77)*/
+    background: -webkit-linear-gradient(rgb(255, 255, 97), rgb(245, 221, 39));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/*text-klassid*/
+.galacticTextZektonRGFontOnly, .gTZRG {
+    font-family: zektonRG
+}
+
+.galacticTextForgottenFuturistRGFontOnly {
+    font-family: forgottenFuturistRG
+}
+
+.galacticTextForgottenFuturistRGITFontOnly {
+    font-family: forgottenFuturistRGIT
+}
+
+.galacticTextForgottenFuturistBDFontOnly {
+    font-family: forgottenFuturistBD
+}
+
+.galacticTextForgottenFuturistBDITFontOnly {
+    font-family: forgottenFuturistBDIT
+}
+
+.gNavLink {
+    font-family: zektonRG;
+    text-shadow: 4px white;
+    /* missing proper stroke implementation */
+}
+
+/*element-klassid*/
+body {
+    background-color: #120441;
+}
+
+p, div {
+    color: #b6ff00;
+}
+
+a:link, a:visited {
+    color: rgb(77, 237, 255);
+    text-decoration: none !important;
+}
+
+a:hover {
+    color: rgb(77, 237, 255);
+    text-decoration: underline !important;
+}
+
+a:active {
+    color: white;
+    text-decoration: none !important;
+}
+
+a:hover path {
+    fill: #FF0000 !important;
+}
+
+/*button-klassid*/
+
+
+.gCbuttonText {
+    font-family: forgottenFuturistRG;
+    text-align: center;
+    position: relative;
+}
+
+.gCbuttonLicon {
+    width: 50px;
+    height: 50px;
+}
+
+.gCbuttonL0 {
+    width: 75px;
+    height: 50px;
+}
+
+.gCbuttonL1 {
+    width: 130px;
+    height: 30px;
+}
+
+.gCbuttonL2 {
+    width: 200px;
+    height: 40px;
+}
+
+.gCbuttonL3 {
+    width: 400px;
+    height: 50px;
+}
+
+.gCbuttonL4 {
+    width: 500px;
+    height: 50px;
+}
+
+.gCbuttonL5 {
+    width: 600px;
+    height: 50px;
+}
+
+.gCbuttonSvgRectBaseStyle {
+    width: inherit;
+    height: 50px;
+    fill: white;
+}
+
+    .gCbuttonSvgRectBaseStyle:hover {
+        width: inherit;
+        height: 50px;
+        fill: rgb(242, 66, 255);
+    }
+
+.gCbuttonSvgTri1BaseStyle {
+    fill: red;
+}
+
+.svgButtonMainStyle { /* rect normal */
+    width: inherit;
+    height: 30px;
+    fill: var(--purple-2); /**/
+    overflow: visible;
+}
+
+    .svgButtonMainStyle:hover { /* rect hover */
+        fill: var(--green-2);
+    }
+
+        .svgButtonMainStyle:hover ~ .svgButtonMainTextStyle { /* text ishover */
+            fill: var(--teal-1);
+        }
+
+        .svgButtonMainStyle:hover + .svgButtonMainTriangleStyle { /* tri ishover */
+            fill: var(--yellow-1);
+        }
+
+.svgButtonMainTextStyle {
+    fill: var(--yellow-1);
+    x: 10px;
+    y: 50px;
+}
+
+    .svgButtonMainTextStyle:hover {
+        fill: var(--teal-1);
+    }
+
+        .svgButtonMainTextStyle:hover + .svgButtonMainStyle:hover {
+            fill: var(--green-2);
+        }
+
+        .svgButtonMainTextStyle:hover + .svgButtonMainTriangleStyle {
+            fill: var(--yellow-1);
+        }
+
+.svgButtonMainTriangleStyle {
+    fill: var(--yellow-1);
+}
+
+    .svgButtonMainTriangleStyle:hover ~ .svgButtonMainStyle:hover {
+        fill: var(--green-2);
+    }
+
+    .svgButtonMainTriangleStyle:hover ~ .svgButtonMainTextStyle { /* text ishover */
+        fill: var(--teal-1);
+    }
+
+
+
+/*
+*/

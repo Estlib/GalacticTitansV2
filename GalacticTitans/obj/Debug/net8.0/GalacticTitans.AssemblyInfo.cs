@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GalacticTitans")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f87ca77b8f84a35009433f25e227a68e0529a4e5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+416fd7b5d7a7598ded6bb48e1084ee3ce1eb6ff2")]
 [assembly: System.Reflection.AssemblyProductAttribute("GalacticTitans")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GalacticTitans")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
