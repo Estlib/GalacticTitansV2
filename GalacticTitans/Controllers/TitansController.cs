@@ -1,9 +1,14 @@
-﻿using GalacticTitans.Core.Dto;
+﻿using GalacticTitans.ApplicationServices.Services;
+using GalacticTitans.Core.Domain;
+using GalacticTitans.Core.Dto;
 using GalacticTitans.Core.ServiceInterface;
 using GalacticTitans.Data;
+using GalacticTitans.Models;
+using GalacticTitans.Models.Stories;
 using GalacticTitans.Models.Titans;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace GalacticTitans.Controllers
 {
@@ -16,17 +21,32 @@ namespace GalacticTitans.Controllers
         private readonly GalacticTitansContext _context;
         private readonly ITitansServices _titansServices;
         private readonly IFileServices _fileServices;
+        private readonly IPlayerProfilesServices _playerProfilesServices;
 
-        public TitansController(GalacticTitansContext context, ITitansServices titansServices, IFileServices fileServices)
+        public TitansController(GalacticTitansContext context, ITitansServices titansServices, IFileServices fileServices, IPlayerProfilesServices playerProfilesServices)
         {
             _context = context;
             _titansServices = titansServices;
             _fileServices = fileServices;
+            _playerProfilesServices = playerProfilesServices;
         }
 
+
+        /*
+         
+        T I T A N S 
+         
+         */
+
+        /// <summary>
+        /// Get admin-level index
+        /// 
+        /// </summary>
+        /// <returns>view</returns>
         [HttpGet]
         public IActionResult Index()
         {
+
             var resultingInventory = _context.Titans
                 .OrderByDescending(y => y.TitanLevel)
                 .Select(x => new TitanIndexViewModel
@@ -34,18 +54,39 @@ namespace GalacticTitans.Controllers
                     ID = x.ID,
                     TitanName = x.TitanName,
                     TitanType = (Models.Titans.TitanType)(Core.Dto.TitanType)x.TitanType,
-                    TitanLevel = x.TitanLevel,                    
+                    TitanLevel = x.TitanLevel,
+                    Image = (List<TitanImageViewModel>)_context.FilesToDatabase
+                       .Where(t => t.TitanID == x.ID)
+                       .Select(z => new TitanImageViewModel
+                       {
+                           TitanID = z.ID,
+                           ImageID = z.ID,
+                           ImageData = z.ImageData,
+                           ImageTitle = z.ImageTitle,
+                           Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(z.ImageData))
+                       })
                 });
             return View(resultingInventory);
         }
+        /// <summary>
+        /// Get CREATE
+        /// </summary>
+        /// <returns>View to add titan, admin</returns>
         [HttpGet]
         public IActionResult Create() 
         {
             TitanCreateViewModel vm = new();
             return View("Create",vm);
         }
+
+        /// <summary>
+        /// POST CREATE, admin
+        /// </summary>
+        /// <param name="vm">model that the view passes onto this method</param>
+        /// <returns></returns>
         [HttpPost , ActionName("Create")]
         [ValidateAntiForgeryToken]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> Create(TitanCreateViewModel vm)
         {
             var dto = new TitanDto()
@@ -56,7 +97,7 @@ namespace GalacticTitans.Controllers
                 TitanXPNextLevel = 100,
                 TitanLevel = 0,
                 TitanType = (Core.Dto.TitanType)vm.TitanType,
-                TitanStatus = (Core.Dto.TitanStatus)vm.TitanStatus,
+                TitanStatus = (Core.Domain.SupportingDomain.TitanStatus)vm.TitanStatus,
                 PrimaryAttackName = vm.PrimaryAttackName,
                 PrimaryAttackPower = vm.PrimaryAttackPower,
                 SecondaryAttackName = vm.SecondaryAttackName,
@@ -80,19 +121,41 @@ namespace GalacticTitans.Controllers
 
             if (result == null)
             {
-                return RedirectToAction("Index");
+                List<string> errordatas =
+                    [
+                        "Area", "Titans",
+                        "Issue", "Create-Post",
+                        "StatusMessage", "Could not add this titan.",
+                        "TitanDto",$"{dto}"
+                    ];
+                ViewBag.ErrorDatas = errordatas;
+                return View("~/Views/Shared/Error.cshtml", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
             }
 
             return RedirectToAction("Index", vm);
         }
+        /// <summary>
+        /// GET DETAILS
+        /// </summary>
+        /// <param name="id">id of titan</param>
+        /// <returns>details view for singular titan</returns>
         [HttpGet]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> Details(Guid id /*, Guid ref*/)
         {
             var titan = await _titansServices.DetailsAsync(id);
 
-            if (titan == null) 
+            if (titan == null)
             {
-                return NotFound(); // <- TODO; custom partial view with message, titan is not located
+                List<string> errordatas =
+                    [
+                        "Area", "Titans",
+                        "Issue", "Details",
+                        "StatusMessage", "Could not find Titan.",
+                        "ID",$"{id}"
+                    ];
+                ViewBag.ErrorDatas = errordatas;
+                return View("~/Views/Shared/Error.cshtml", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
             }
 
             var images = await _context.FilesToDatabase
@@ -126,13 +189,36 @@ namespace GalacticTitans.Controllers
         }
 
         [HttpGet]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> Update(Guid id)
         {
-            if (id == null) { return NotFound(); }
+            if (id == null)
+            {
+                List<string> errordatas =
+                    [
+                        "Area", "Titans",
+                        "Issue", "Update-Get",
+                        "StatusMessage", "Cannot seek a null id.",
+                    ];
+                ViewBag.ErrorDatas = errordatas;
+                return View("~/Views/Shared/Error.cshtml", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
 
             var titan = await _titansServices.DetailsAsync(id);
 
-            if (titan == null) { return NotFound(); }
+            if (titan == null)
+            {
+                List<string> errordatas =
+                    [
+                        "Area", "Titans",
+                        "Issue", "Update-Get",
+                        "StatusMessage", "Could not find requested Titan for editing.",
+                        "ID",$"{id}",
+                        "Titan",$"{titan}"
+                    ];
+                ViewBag.ErrorDatas = errordatas;
+                return View("~/Views/Shared/Error.cshtml", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
 
             var images = await _context.FilesToDatabase
                 .Where(x => x.TitanID == id)
@@ -169,6 +255,7 @@ namespace GalacticTitans.Controllers
             return View("Update", vm);
         }
         [HttpPost]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> Update(TitanCreateViewModel vm)
         {
             var dto = new TitanDto()
@@ -180,7 +267,7 @@ namespace GalacticTitans.Controllers
                 TitanXPNextLevel = 100,
                 TitanLevel = 0,
                 TitanType = (Core.Dto.TitanType)vm.TitanType,
-                TitanStatus = (Core.Dto.TitanStatus)vm.TitanStatus,
+                TitanStatus = (Core.Domain.SupportingDomain.TitanStatus)vm.TitanStatus,
                 PrimaryAttackName = vm.PrimaryAttackName,
                 PrimaryAttackPower = vm.PrimaryAttackPower,
                 SecondaryAttackName = vm.SecondaryAttackName,
@@ -202,17 +289,52 @@ namespace GalacticTitans.Controllers
             };
             var result = await _titansServices.Update(dto);
 
-            if (result == null) { return RedirectToAction("Index"); }
+            if (result == null)
+            {
+                List<string> errordatas =
+                    [
+                        "Area", "Titans",
+                        "Issue", "Update-Post",
+                        "StatusMessage", "Could not edit this titan.",
+                        "Result",$"{result}",
+                        "TitanDto",$"{dto}"
+                    ];
+                ViewBag.ErrorDatas = errordatas;
+                return View("~/Views/Shared/Error.cshtml", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
             return RedirectToAction("Index", vm);
         }
         [HttpGet]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> Delete(Guid id)
         {
-            if (id == null) { return NotFound(); }
+            if (id == null)
+            {
+                List<string> errordatas =
+                    [
+                        "Area", "Titans",
+                        "Issue", "Delete-Get",
+                        "StatusMessage", "Cannot seek a null id.",
+                    ];
+                ViewBag.ErrorDatas = errordatas;
+                return View("~/Views/Shared/Error.cshtml", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
 
             var titan = await _titansServices.DetailsAsync(id);
 
-            if (titan == null) { return NotFound(); };
+            if (titan == null)
+            {
+                List<string> errordatas =
+                    [
+                        "Area", "Titans",
+                        "Issue", "Delete-Get",
+                        "StatusMessage", "Could not find requested Titan for removal.",
+                        "ID",$"{id}",
+                        "Titan",$"{titan}"
+                    ];
+                ViewBag.ErrorDatas = errordatas;
+                return View("~/Views/Shared/Error.cshtml", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            };
 
             var images = await _context.FilesToDatabase
                 .Where(x => x.TitanID == id)
@@ -248,16 +370,30 @@ namespace GalacticTitans.Controllers
         }
 
         [HttpPost]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> DeleteConfirmation(Guid id)
         {
             var titanToDelete = await _titansServices.Delete(id);
 
-            if (titanToDelete == null) { return RedirectToAction("Index"); }
+            if (titanToDelete == null)
+            {
+                List<string> errordatas =
+                    [
+                        "Area", "Titans",
+                        "Issue", "DeleteConfirmation-Post",
+                        "StatusMessage", "Could not find requested Titan for removal.",
+                        "ID",$"{id}",
+                        "Titan",$"{titanToDelete}"
+                    ];
+                ViewBag.ErrorDatas = errordatas;
+                return View("~/Views/Shared/Error.cshtml", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            };
 
             return RedirectToAction("Index");
         }
 
         [HttpPost]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> RemoveImage(TitanImageViewModel vm)
         {
             var dto = new FileToDatabaseDto()
@@ -265,8 +401,134 @@ namespace GalacticTitans.Controllers
                 ID = vm.ImageID
             };
             var image = await _fileServices.RemoveImageFromDatabase(dto);
-            if (image == null) { return RedirectToAction("Index"); }
+            if (image == null) 
+            {
+                List<string> errordatas =
+                    [
+                        "Area", "Titans",
+                        "Issue", "RemoveImage-Post",
+                        "StatusMessage", "Could not find titans image.",
+                        "TitanImageViewModel",$"{vm}",
+                        "Image",$"{image}"
+                    ];
+                ViewBag.ErrorDatas = errordatas;
+                return View("~/Views/Shared/Error.cshtml", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
             return RedirectToAction("Index");
+        }
+
+        /*
+
+        T I T A N O W N E R S H I P 
+
+         */
+
+        /// <summary>
+        /// player get titan from story event
+        /// </summary>
+        /// <param name="vm"></param>
+        /// <returns></returns>
+        [HttpPost, ActionName("CreateTitanOwnership")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateRandomTitanOwnership(TitanOwnershipFromStoryViewModel vm)
+        {
+            // create random int based on how many titans are in the database
+            int RNG = new Random().Next(1, _context.Titans.Count());
+
+            //find the source titan, based on random integer
+            var sourceTitan = _context.Titans.OrderByDescending(x => x.TitanName).Take(RNG);
+
+
+            var dto = new TitanOwnershipDto()
+            {
+                TitanName = vm.AddedTitan.TitanName,
+                TitanHealth = 100,
+                TitanXP = 0,
+                TitanXPNextLevel = 100,
+                TitanLevel = 0,
+                TitanType = (Core.Dto.TitanType)vm.AddedTitan.TitanType,
+                TitanStatus = vm.AddedTitan.TitanStatus,
+                PrimaryAttackName = vm.AddedTitan.PrimaryAttackName,
+                PrimaryAttackPower = vm.AddedTitan.PrimaryAttackPower,
+                SecondaryAttackName = vm.AddedTitan.SecondaryAttackName,
+                SecondaryAttackPower = vm.AddedTitan.SecondaryAttackPower,
+                SpecialAttackName = vm.AddedTitan.SpecialAttackName,
+                SpecialAttackPower = vm.AddedTitan.SpecialAttackPower,
+                TitanWasBorn = vm.AddedTitan.TitanWasBorn,
+                OwnershipCreatedAt = DateTime.Now,
+                OwnershipUpdatedAt = DateTime.Now,
+                Files = vm.AddedTitan.Files,
+                Image = vm.AddedTitan.Image 
+                //.Select(x => new FileToDatabase
+                //{
+                //    ID = x.ImageID,
+                //    ImageData = x.ImageData,
+                //    ImageTitle = x.ImageTitle,
+                //    TitanID = x.TitanID,
+                //}).ToArray()
+            };
+            //var result = await _storiesServices.Create(dto);
+            //STUB, needs storiesservices, a story to utilise, storiescontroller to function
+
+            string result = null;
+            if (result == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Index", vm);
+        }
+
+        [ValidateAntiForgeryToken]
+        public async Task<TitanOwnership> NewRandomTitanOwnership()
+        {
+            // create random int based on how many titans are in the database
+            int RNG = new Random().Next(1, _context.Titans.Count());
+
+            //find the source titan, based on random integer
+            var sourceTitan = await _context.Titans.OrderByDescending(x => x.TitanName)
+                .Skip(RNG)
+                .FirstAsync();
+            var randomtitan = await _titansServices.CreateRandomFromExisting(sourceTitan); 
+
+            //var result = await _storiesServices.Create(dto);
+            //STUB, needs storiesservices, a story to utilise, storiescontroller to function
+
+            return randomtitan;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> MyTitans(Guid id)
+        {
+            var thisUserOwnerships = await _context.TitanOwnerships
+                .Where(to => to.OwnedByPlayerProfile == id.ToString())
+                .OrderByDescending(to => to.TitanLevel)
+                .ToListAsync();
+
+            var resultingInventory = thisUserOwnerships
+                .Select(x => new TitanOwnershipIndexViewModel
+                {
+                    TitanOwnershipID = x.TitanOwnershipID,
+                    TitanName = x.TitanName,
+                    TitanType = (Models.Titans.TitanType)(Core.Dto.TitanType)x.TitanType,
+                    TitanLevel = x.TitanLevel,
+                    Image = (List<TitanImageViewModel>)_context.FilesToDatabase
+                       .Where(t => t.TitanID == Guid.Parse(x.IsOwnershipOfThisTitan))
+                       .Select(z => new TitanImageViewModel
+                       {
+                           TitanID = z.TitanOwnershipID,
+                           ImageID = z.ID,
+                           ImageData = z.ImageData,
+                           ImageTitle = z.ImageTitle,
+                           Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(z.ImageData))
+                       }).ToList()
+                }).ToArray();
+
+            
+            var profile = await _playerProfilesServices.DetailsAsync(Guid.Parse(id.ToString()));
+            ViewData["thisPlayer"] = profile;
+            return View(resultingInventory);
+
         }
     }
 }

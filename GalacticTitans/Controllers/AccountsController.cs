@@ -1,5 +1,8 @@
-﻿using GalacticTitans.Core.Domain;
+﻿using GalacticTitans.ApplicationServices.Services;
+using GalacticTitans.Core.Domain;
+using GalacticTitans.Core.Dto;
 using GalacticTitans.Core.Dto.AccountsDtos;
+using GalacticTitans.Core.ServiceInterface;
 using GalacticTitans.Data;
 using GalacticTitans.Models;
 using GalacticTitans.Models.Accounts;
@@ -15,18 +18,31 @@ namespace GalacticTitans.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly GalacticTitansContext _context;
-
+        private readonly IEmailsServices _emailsServices;
+        private readonly IPlayerProfilesServices _playerProfilesServices;
         public AccountsController
             (
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            GalacticTitansContext context
+            GalacticTitansContext context,
+            IEmailsServices emailsServices,
+            IPlayerProfilesServices playerProfilesServices
             )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
+            _emailsServices = emailsServices;
+            _playerProfilesServices = playerProfilesServices;
         }
+
+        /// <summary>
+        /// VIEW-GET.
+        /// Seeks user, checks if user has password.
+        /// If has password, redirects to "ChangePassword" view.
+        /// If user doesnt have password, returns "AddPassword" view.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> AddPassword()
         {
@@ -38,7 +54,15 @@ namespace GalacticTitans.Controllers
             }
             return View();
         }
-
+        /// <summary>
+        /// DATA-POST.
+        /// Seeks user. Gets result, using AddPasswordAsync method where user that was seeked, is given to it with password from model as second parameter.
+        /// Checks if adding of password is unsuccessful, in which case enumerates errors, and returns the view.
+        /// If is successful, then it refreshes the users signin status, and returns "AddPasswordConfirmation" view.
+        /// ModelState validity is checked, possible errors not given a view in GT error display system.
+        /// </summary>
+        /// <param name="model">Model containing necessary data</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> AddPassword(AddPasswordViewModel model)
         {
@@ -59,19 +83,31 @@ namespace GalacticTitans.Controllers
             }
             return View(model);
         }
-
+        /// <summary>
+        /// VIEW-GET. returns "ChangePassword" view.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult ChangePassword()
         {
             return View();
         }
-
+        /// <summary>
+        /// DATA-POST. checks if user is available, if not, redirects to "Login" view.
+        /// Edits users password using ChangePassWordAsync(), giving it found user, old password from model and new password from model.
+        /// Checks if changing of password is unsuccessful, in which case enumerates errors, and returns the view.
+        /// If is successful, then it refreshes the users signin status, and returns "ChangePasswordConfirmation" view.
+        /// ModelState validity is checked, user null is checked, possible errors not given a view in GT error display system.
+        /// If ModelState validity is false, it returns the same view, with the data.
+        /// </summary>
+        /// <param name="model">Model containing necessary data</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.GetUserAsync (User);
+                var user = await _userManager.GetUserAsync(User);
                 if (user == null)
                 {
                     return RedirectToAction("Login");
@@ -91,6 +127,11 @@ namespace GalacticTitans.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// VIEW-GET. returns "ForgotPassword" view.
+        /// Has [AllowAnonymous] so users that are not logged in can change password.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgotPassword()
@@ -190,6 +231,7 @@ namespace GalacticTitans.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+            var redirectGuid = string.Empty;
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser()
@@ -197,42 +239,78 @@ namespace GalacticTitans.Controllers
                     UserName = model.Email,
                     Email = model.Email,
                     City = model.City,
+                    ProfileType = model.ProfileType
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
+                TempData["NewUserID"] = user.Id;
                 if (result.Succeeded)
                 {
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
                     var confirmationLink = Url.Action("ConfirmEmail", "Accounts", new { userId = user.Id, token = token }, Request.Scheme);
+
+                    EmailTokenDto newsignup = new();
+                    newsignup.Token = token;
+                    newsignup.Body = $"Thank you for signing up, klikka här:  {confirmationLink}";
+                    newsignup.Subject = "GalacticTitans Register";
+                    newsignup.To = user.Email;
+
+                    _emailsServices.SendEmailToken(newsignup, token);
                     if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                     {
                         return RedirectToAction("ListUsers", "Administrations");
                     }
 
-                    List<string> errordatas = 
-                        [
-                        "Area", "Accounts", 
-                        "Issue", "Success", 
-                        "StatusMessage", "Registration Success", 
-                        "ActedOn", $"{model.Email}", 
-                        "CreatedAccountData", $"{model.Email}\n{model.City}\n[password hidden]\n[password hidden]"
-                        ];
+                    //return RedirectToAction("NewProfile", "PlayerProfiles", user.Id);
+                    redirectGuid = user.Id;
+
+
+                    //List<string> errordatas = 
+                    //    [
+                    //    "Area", "Accounts", 
+                    //    "Issue", "Success", 
+                    //    "StatusMessage", "Registration Success", 
+                    //    "ActedOn", $"{model.Email}", 
+                    //    "CreatedAccountData", $"{model.Email}\n{model.City}\n[password hidden]\n[password hidden]"
+                    //    ];
+                    //ViewBag.ErrorDatas = errordatas;
+                    //ViewBag.ErrorTitle = "You have successfully registered";
+                    //ViewBag.ErrorMessage = "Before you can log in, please confirm email from the link" +
+                    //    "\nwe have emailed to your email address.";
+
+                    ////var newprofileforthisuser = _context
+
+
+                    //return View("~/Views/Shared/Error.cshtml", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+
+                }
+                else
+                {
+
+                    List<string> rawerrors = new();
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                        rawerrors.Add(error.Description.ToString());
+                    }
+                    List<string> errordatas = ["Area", "Register", "Issue", "Registration failure", "ModelState errors =>", $"{string.Join("\n", rawerrors.ToArray())}"];
                     ViewBag.ErrorDatas = errordatas;
-                    ViewBag.ErrorTitle = "You have successfully registered";
-                    ViewBag.ErrorMessage = "Before you can log in, please confirm email from the link" +
-                        "\nwe have emailed to your email address.";
                     return View("~/Views/Shared/Error.cshtml", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
                 }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
             }
+            //return RedirectToAction("AccountCreated");
+            
+            return RedirectToAction("NewProfile", "PlayerProfiles", new { id = redirectGuid });
+        }
+        [HttpGet]
+        public IActionResult AccountCreated()
+        {
             return View();
         }
 
         [HttpGet]
         [AllowAnonymous]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
             if (userId == null || token == null) { return RedirectToAction("Index", "Home"); }
@@ -240,16 +318,36 @@ namespace GalacticTitans.Controllers
             if (user == null) 
             {
                 ViewBag.ErrorMessage = $"The user with id of {userId} is not valid";
-                return View("NotFound");
+                return View("Shared", "Error");
             }
             var result = await _userManager.ConfirmEmailAsync(user, token);
+            List<string> errordatas =
+                        [
+                        "Area", "Accounts",
+                        "Issue", "Failure",
+                        "StatusMessage", "Confirmation Failure",
+                        "ActedOn", $"{user.Email}",
+                        "CreatedAccountData", $"{user.Email}\n{user.City}\n[password hidden]\n[password hidden]"
+                        ];
             if (result.Succeeded)
             {
+                errordatas =
+                        [
+                        "Area", "Accounts",
+                        "Issue", "Success",
+                        "StatusMessage", "Confirmation Success",
+                        "ActedOn", $"{user.Email}",
+                        "CreatedAccountData", $"{user.Email}\n{user.City}\n[password hidden]\n[password hidden]"
+                        ];
+                ViewBag.ErrorDatas = errordatas;
                 return View();
+
             }
+            
+            ViewBag.ErrorDatas = errordatas;
             ViewBag.ErrorTitle = "Email cannot be confirmed";
             ViewBag.ErrorMessage = $"The users email, with userid of {userId}, cannot be confirmed.";
-            return View("Error");
+            return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
         // user login & logout methods
